@@ -25,9 +25,9 @@ int main(void)
         char *s;
         int len;
         
-        printf("SHS's SHELL \n");
-        printf("username: %s\n", getpwuid(getuid())->pw_name);
-        printf("hostname: %s\n",	 hostname);
+        printf("\x1b[33mSHS's SHELL \n");
+        printf("\x1b[36musername: %s\n", getpwuid(getuid())->pw_name);
+        printf("\x1b[36mhostname: %s\n",	 hostname);
 
         s = fgets(command, MAX_LEN_LINE, stdin);
         if (s == NULL) {
