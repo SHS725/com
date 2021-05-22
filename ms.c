@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <pwd.h>  //a
+#include <pwd.h>
 
 #define MAX_LEN_LINE    100
 #define LEN_HOSTNAME	30
@@ -34,7 +34,7 @@ int main(void)
         printf("\x1b[36musername: %s\n", getpwuid(getuid())->pw_name);
         printf("\x1b[36mhostname: %s\n",	 hostname);
 
-        getcwd(cwd, sizeof(cwd));
+        getcwd(cwd, sizeof(cwd));                                                               /* CWD 구현*/
         printf("\x1b[32mCWD is : %s\n\e[0m", cwd);
         
         
@@ -79,49 +79,49 @@ int main(void)
         
         
         if(strstr(command, "echo")!= NULL){                                                /* echo 구현 */
-	printf("\x1b[35m%s\n\e[0m",strstr(command, "echo")+5);
+			printf("\x1b[35m%s\n\e[0m",strstr(command, "echo")+5);
         }
 
         if(strstr(command, "show_command")!= NULL){                                 /* show_command 구현 */
-              printf("%s\n", my_command);
+			printf("%s\n", my_command);
         }
 
         if(strstr(command, "ls")!= NULL){                                                     /* ls 구현 */
         	input = strtok(command," ");
-              input = strtok(NULL, " ");
-              args[0] = "/bin/ls";
-              args[1] = input;
-	input = strtok(NULL, " ");
-	args[2] = input;
+            input = strtok(NULL, " ");
+            args[0] = "/bin/ls";
+            args[1] = input;
+		    input = strtok(NULL, " ");
+	    	args[2] = input;
         }	
 
         if(strstr(command, "date")!= NULL){                                                 /* date 구현 */
-	args[0] = "/bin/date";
+			args[0] = "/bin/date";
         }
         
 
         if(strstr(command, "mkdir")!= NULL){                                                /* mkdir 구현 */
         	input = strtok(command," ");
-              input = strtok(NULL, " ");
-              args[0] = "/bin/mkdir";
-              args[1] = input;
-	input = strtok(NULL, " ");
-	args[2] = input;
+            input = strtok(NULL, " ");
+            args[0] = "/bin/mkdir";
+            args[1] = input;
+	        input = strtok(NULL, " ");
+	        args[2] = input;
               
         }
 
         if(strstr(command, "rmdir")!= NULL){                                                /* rmdir 구현 */
         	input = strtok(command," ");
-              input = strtok(NULL, " ");
-              args[0] = "/bin/rmdir";
-              args[1] = input;
-	input = strtok(NULL, " ");
-	args[2] = input;
+            input = strtok(NULL, " ");
+            args[0] = "/bin/rmdir";
+            args[1] = input;
+	        input = strtok(NULL, " ");
+        	args[2] = input;
               
         }
-        input = strtok(command, " ");
+        input = strtok(command, " ");                                                    /* command not found 구현*/
         if(!strstr(my_command, input)){
-	printf("%s : command not found (Try 'show_command')\n", command);                      /* command not found 구현 */
+			printf("%s : command not found (Try 'show_command')\n", command);                   
         }
             ret = execve(args[0], args, NULL);
             if (ret < 0) {
